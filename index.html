@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Kulfi! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fbc2eb 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Test Mode Toggle */
+        .test-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            transition: 0.3s;
+        }
+        .test-toggle:hover { background: #ff4e50; }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .screen.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Screen 1: Landing Page */
+        .glass-panel {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.4);
+            z-index: 10;
+            position: relative;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 4.5rem;
+            color: #fff;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+            margin-bottom: 5px;
+        }
+        .teddy-container {
+            position: absolute;
+            width: 100%;
+            top: 40%;
+            left: 0;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 5;
+        }
+        .teddy {
+            font-size: 4.5rem;
+            animation: realisticWalk 4s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+        }
+        @keyframes realisticWalk {
+            0% { transform: translateX(0) translateY(0) rotate(-5deg); }
+            25% { transform: translateX(15px) translateY(-10px) rotate(5deg); }
+            50% { transform: translateX(30px) translateY(0) rotate(-5deg); }
+            75% { transform: translateX(15px) translateY(-10px) rotate(5deg); }
+            100% { transform: translateX(0) translateY(0) rotate(-5deg); }
+        }
+
+        .realistic-heart {
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle at 40px 40px, #ff4b72, #c70039);
+            position: relative;
+            transform: rotate(-45deg);
+            margin: 30px auto;
+            box-shadow: 0 0 40px rgba(255, 42, 95, 0.6), inset 0 0 20px rgba(255,255,255,0.5);
+            animation: realHeartbeat 1s infinite;
+        }
+        .realistic-heart::before, .realistic-heart::after {
+            content: "";
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle at 40px 40px, #ff4b72, #c70039);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.2);
+        }
+        .realistic-heart::before { top: -70px; left: 0; }
+        .realistic-heart::after { left: 70px; top: 0; }
+
+        @keyframes realHeartbeat {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            20% { transform: rotate(-45deg) scale(1.1); box-shadow: 0 0 60px rgba(255, 42, 95, 0.8); }
+            40% { transform: rotate(-45deg) scale(1.05); }
+            60% { transform: rotate(-45deg) scale(1.15); box-shadow: 0 0 80px rgba(255, 42, 95, 1); }
+        }
+
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            z-index: 6;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            width: 120px;
+            text-align: center;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff4e50, #f9d423);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 78, 80, 0.4);
+            margin-top: 15px;
+        }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(255, 78, 80, 0.6); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center;
+            z-index: 2000; backdrop-filter: blur(10px);
+        }
+        .modal-box {
+            background: #fff; color: #333; padding: 35px; border-radius: 25px;
+            max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .modal-box h3 { color: #d32f2f; font-size: 1.6rem; margin-bottom: 15px; }
+        .modal-box p { color: #555; line-height: 1.6; margin-bottom: 20px; }
+
+        /* Screen 2: Security Check */
+        .warning-banner {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: #fff; padding: 12px; border-radius: 12px;
+            font-size: 0.95rem; font-weight: bold; margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+            animation: pulseWarning 2s infinite;
+        }
+        @keyframes pulseWarning { 0%,100%{opacity:1;} 50%{opacity:0.8;} }
+
+        .security-input {
+            width: 100%; padding: 16px; border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.8); background: rgba(0,0,0,0.2);
+            color: #fff; font-size: 1.5rem; text-align: center; font-weight: bold;
+            letter-spacing: 3px; box-shadow: inset 0 5px 10px rgba(0,0,0,0.3);
+            text-transform: uppercase; outline: none;
+        }
+        .security-input::placeholder { color: rgba(255,255,255,0.6); font-size: 1rem; letter-spacing: normal; }
+
+        /* Screen 3: Realistic Map */
+        .map-wrapper {
+            width: 100%; max-width: 700px; height: 450px;
+            background: #111b29;
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            border-radius: 25px; position: relative; overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+        .pulse-marker {
+            position: absolute; width: 15px; height: 15px;
+            background: #00ffcc; border-radius: 50%;
+            box-shadow: 0 0 15px #00ffcc;
+        }
+        .pulse-marker::after {
+            content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border: 2px solid #00ffcc; border-radius: 50%;
+            animation: radarPulse 1.5s infinite ease-out;
+        }
+        @keyframes radarPulse { 0%{transform:scale(0.5);opacity:1;} 100%{transform:scale(2);opacity:0;} }
+        
+        .chennai-mark { top: 80px; left: 500px; }
+        .trichy-mark { bottom: 90px; left: 180px; }
+        
+        .map-label {
+            position: absolute; color: #fff; font-weight: bold; font-size: 1.1rem;
+            text-shadow: 0 2px 5px #000;
+        }
+
+        .flying-gift-box {
+            position: absolute; font-size: 2.8rem; z-index: 20;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 15px 10px rgba(0,0,0,0.5));
+            animation: giftFloat 1s ease-in-out infinite alternate;
+        }
+        @keyframes giftFloat { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-50%, -50%) scale(1.1); } }
+
+        /* Screen 4: Realistic House Night Scene */
+        .realistic-night-scene {
+            width: 100%; max-width: 700px; height: 500px;
+            background: linear-gradient(to bottom, #091322 0%, #152642 60%, #1a3642 100%);
+            border-radius: 25px; position: relative; overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.1);
+        }
+        .moon {
+            position: absolute; top: 40px; right: 50px; width: 60px; height: 60px;
+            background: #fff; border-radius: 50%;
+            box-shadow: 0 0 40px #fff, 0 0 80px #fff;
+        }
+        
+        .real-house {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            width: 320px; height: 240px; background: #2c221e;
+            border-radius: 10px; box-shadow: inset -20px 0 30px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        .real-roof {
+            position: absolute; top: -85px; left: -20px; width: 360px; height: 95px;
+            background: repeating-linear-gradient(90deg, #1f1410, #1f1410 10px, #2a1b15 10px, #2a1b15 20px);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+        }
+        .glow-window {
+            position: absolute; top: 50px; width: 55px; height: 65px;
+            background: #ffcc00; border: 6px solid #1a100c;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.7), inset 0 0 10px #ff9900;
+        }
+        .glow-window::before { content: ""; position: absolute; top: 0; left: 50%; width: 6px; height: 100%; background: #1a100c; transform: translateX(-50%);}
+        .glow-window::after { content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 6px; background: #1a100c; transform: translateY(-50%);}
+        .glow-window.l { left: 35px; } .glow-window.r { right: 35px; }
+
+        .real-door {
+            position: absolute; bottom: 0; left: 130px; width: 70px; height: 110px;
+            background: #1c100a; border-radius: 5px 5px 0 0;
+            border: 3px solid #0f0805;
+            transform-origin: left; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+        .door-light-spill {
+            position: absolute; bottom: 0; left: 130px; width: 70px; height: 110px;
+            background: #ffcc00; border-radius: 5px 5px 0 0; opacity: 0;
+            box-shadow: 0 0 40px #ffcc00, 0 10px 80px #ffcc00;
+            transition: opacity 1.5s; z-index: 1;
+        }
+        .grass-ground {
+            position: absolute; bottom: 0; width: 100%; height: 40px;
+            background: #0a1f11; box-shadow: inset 0 15px 20px rgba(0,0,0,0.5);
+        }
+        .drop-gift {
+            position: absolute; font-size: 2.8rem; top: -100px; left: calc(50% - 25px);
+            transition: top 3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 25;
+            filter: drop-shadow(0 20px 15px rgba(0,0,0,0.6));
+        }
+
+        /* Screen 6: Realistic Vintage Letter */
+        .paper-letter {
+            max-width: 650px; width: 90%;
+            background: #fdf6e3;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                radial-gradient(circle, rgba(0,0,0,0.02) 1px, transparent 1px);
+            background-size: 100% 30px, 4px 4px;
+            padding: 50px 40px;
+            border-radius: 5px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 0 40px rgba(139, 69, 19, 0.1);
+            color: #2c3e50;
+            text-align: left;
+            position: relative;
+            transform: rotate(-1deg);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .paper-letter::before {
+            content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            width: 100px; height: 30px; background: rgba(255,255,255,0.4);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); transform: rotate(2deg);
+        }
+        .letter-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem; line-height: 1.8;
+            color: #1a1a1a;
+            text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.1);
+        }
+        .real-signature {
+            text-align: right; margin-top: 30px;
+            font-family: 'Sacramento', cursive;
+            font-size: 2.8rem; color: #b30000;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="test-toggle" onclick="toggleTestMode()">⚙️ Test Mode: <span id="testStatus">OFF</span></button>
+
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Wait a Second! ⏰</h3>
+            <p>Why are you in such a rush? Wait patiently and open it right at 12:00 AM midnight to see what's inside!</p>
+            <button class="btn" onclick="closeModal()" style="padding: 10px 25px; font-size: 1rem;">Got it ❤️</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 1 -->
+    <div id="screen1" class="screen active">
+        <div class="teddy-container">
+            <div class="teddy">🧸</div>
+            <div class="teddy">🧸</div>
+        </div>
+        <div class="glass-panel">
+            <h1>Happy Birthday Kulfi! </h1>
+            <p style="font-size: 1.1rem; margin-bottom: 10px;">Waiting for midnight...</p>
+            
+            <div class="realistic-heart">
+                <div class="timer-text" id="liveCountdown">00:00:00</div>
+            </div>
+
+            <button class="btn" onclick="tryOpenGift()">Open Surprise 🎁</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2 -->
+    <div id="screen2" class="screen">
+        <div class="glass-panel">
+            <h2 style="font-family: 'Sacramento', cursive; font-size: 3.5rem;">Security Check 🔒</h2>
+            <p style="margin-bottom: 25px; font-size: 1.1rem;">What is the first nickname I gave you?</p>
+            
+            <div class="warning-banner">
+                ⚠️ WARNING: TYPE YOUR ANSWER ENTIRELY IN CAPITAL LETTERS ONLY!
+            </div>
+
+            <input type="text" id="nicknameInput" class="security-input" placeholder="ENTER ANSWER..." autocomplete="off">
+            <br>
+            <button class="btn" onclick="verifyNickname()">Submit Answer 🔓</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3 -->
+    <div id="screen3" class="screen">
+        <h2 style="font-family: 'Sacramento', cursive; font-size: 3.5rem; margin-bottom: 20px;">Tracking Gift... ✈️</h2>
+        <div class="map-wrapper">
+            <div class="pulse-marker chennai-mark"></div>
+            <div class="map-label" style="top:55px; left: 480px;">📍 Chennai</div>
+            
+            <div class="pulse-marker trichy-mark"></div>
+            <div class="map-label" style="bottom:65px; left: 165px;">📍 Trichy</div>
+            
+            <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
+                <path id="flightPath" d="M 507 87 Q 350 200 187 352" fill="none" stroke="rgba(0,255,204,0.6)" stroke-width="4" stroke-dasharray="8,8"/>
+            </svg>
+            <div id="realGiftFlying" class="flying-gift-box">🎁</div>
+        </div>
+    </div>
+
+    <!-- SCREEN 4 -->
+    <div id="screen4" class="screen">
+        <h2 style="font-family: 'Sacramento', cursive; font-size: 3.5rem; margin-bottom: 20px;">Arrived at Home! 🏡</h2>
+        <div class="realistic-night-scene">
+            <div class="moon"></div>
+            <div id="realFallingGift" class="drop-gift">🎁</div>
+            
+            <div class="real-house">
+                <div class="real-roof"></div>
+                <div class="glow-window l"></div>
+                <div class="glow-window r"></div>
+                
+                <div class="door-light-spill" id="doorLight"></div>
+                <div class="real-door" id="realDoor"></div>
+            </div>
+            <div class="grass-ground"></div>
+        </div>
+    </div>
+
+    <!-- SCREEN 5 -->
+    <div id="screen5" class="screen">
+        <div class="glass-panel" style="cursor:pointer;" onclick="goToScreen('screen6')">
+            <h2 style="font-family: 'Sacramento', cursive; font-size: 3rem; margin-bottom: 20px;">A Special Gift For You... 🧸💖</h2>
+            <div style="font-size: 6rem; animation: pulseWarning 1.5s infinite;">🎁</div>
+            <p style="margin-top: 15px; font-weight: bold; font-size: 1.2rem;">Tap the Gift to Open! 🎀</p>
+        </div>
+    </div>
+
+    <!-- SCREEN 6: Realistic Letter -->
+    <div id="screen6" class="screen">
+        <div class="paper-letter">
+            <div class="letter-content">
+                Happiest birthday, my dear Kulfi! Your smile truly means the world to me. We might not have met in person yet, but we’ve shared so many moments online. We’ve had our ups and downs you’ve blocked and unblocked me, stayed silent, and then talked to me again but honestly, none of that matters to me. Whatever you do, I’ll always accept it with a smile because your happiness is all that counts. <br><br>
+                My only wish for you today is to stay happy forever and receive every blessing life has to offer. If I’ve ever hurt you or done anything you didn’t like in the past, I’m truly sorry. I don’t know if we’ll ever meet in real life, but if we ever get the chance, I promise to make your birthday even more special.<br><br>
+                Once again, happiest birthday, my dear Kulfi... and sorry, Vedhisha! ❤️
+            </div>
+            <div class="real-signature">
+                By Gokul Ram
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let testMode = false;
+        function toggleTestMode() {
+            testMode = !testMode;
+            document.getElementById('testStatus').innerText = testMode ? 'ON' : 'OFF';
+            if(testMode && document.getElementById('screen1').classList.contains('active')) {
+                goToScreen('screen2');
+            }
+        }
+
+        // Accurate Live Midnight Countdown Timer
+        function updateTimer() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0); // Next 12:00 AM
+
+            let diff = midnight - now;
+            if (diff <= 0) {
+                if (!testMode) goToScreen('screen2');
+                document.getElementById('liveCountdown').innerText = "00:00:00";
+                return;
+            }
+
+            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const timeString = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+            document.getElementById('liveCountdown').innerText = timeString;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function tryOpenGift() {
+            if (testMode) {
+                goToScreen('screen2');
+            } else {
+                document.getElementById('warningModal').style.display = 'flex';
+            }
+        }
+        function closeModal() { document.getElementById('warningModal').style.display = 'none'; }
+
+        function goToScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(id === 'screen3') startFlight();
+            if(id === 'screen4') startLanding();
+        }
+
+        function verifyNickname() {
+            const val = document.getElementById('nicknameInput').value.trim();
+            if (val === "KULFI") {
+                goToScreen('screen3');
+            } else {
+                alert("Incorrect! Make sure to type KULFI entirely in CAPITAL letters.");
+            }
+        }
+
+        function startFlight() {
+            const gift = document.getElementById('realGiftFlying'), path = document.getElementById('flightPath');
+            const len = path.getTotalLength(); let prog = 0;
+            const iv = setInterval(() => {
+                prog += 0.01;
+                if (prog > 1) { clearInterval(iv); setTimeout(() => goToScreen('screen4'), 800); return; }
+                const pt = path.getPointAtLength(prog * len);
+                gift.style.left = pt.x + 'px'; gift.style.top = pt.y + 'px';
+            }, 30);
+        }
+
+        function startLanding() {
+            setTimeout(() => { document.getElementById('realFallingGift').style.top = '380px'; }, 400); 
+            setTimeout(() => { 
+                document.getElementById('realDoor').style.transform = 'perspective(800px) rotateY(-105deg)'; 
+                document.getElementById('doorLight').style.opacity = '1'; 
+            }, 3000);
+            setTimeout(() => { goToScreen('screen5'); }, 5500);
+        }
+    </script>
+</body>
+</html>
