@@ -24,24 +24,6 @@
             position: relative;
         }
 
-        /* Test Mode Toggle */
-        .test-toggle {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.4);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            z-index: 1000;
-            backdrop-filter: blur(8px);
-            transition: 0.3s;
-        }
-        .test-toggle:hover { background: #ff4e50; }
-
         .screen {
             display: none;
             width: 100%;
@@ -62,7 +44,7 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Screen 1: Landing Page */
+        /* Screen 1: Landing Page with Walking Teddies & Negative Timer */
         .glass-panel {
             max-width: 600px;
             width: 100%;
@@ -143,10 +125,10 @@
             transform: translate(-50%, -50%) rotate(45deg);
             z-index: 6;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #fff;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            width: 120px;
+            width: 130px;
             text-align: center;
         }
 
@@ -165,20 +147,7 @@
         }
         .btn:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(255, 78, 80, 0.6); }
 
-        /* Modal */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center;
-            z-index: 2000; backdrop-filter: blur(10px);
-        }
-        .modal-box {
-            background: #fff; color: #333; padding: 35px; border-radius: 25px;
-            max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-        .modal-box h3 { color: #d32f2f; font-size: 1.6rem; margin-bottom: 15px; }
-        .modal-box p { color: #555; line-height: 1.6; margin-bottom: 20px; }
-
-        /* Screen 2: Security Check */
+        /* Security Check / Password Screen */
         .warning-banner {
             background: linear-gradient(90deg, #ff416c, #ff4b2b);
             color: #fff; padding: 12px; border-radius: 12px;
@@ -330,35 +299,25 @@
 </head>
 <body>
 
-    <button class="test-toggle" onclick="toggleTestMode()">⚙️ Test Mode: <span id="testStatus">OFF</span></button>
-
-    <div id="warningModal" class="modal-overlay">
-        <div class="modal-box">
-            <h3>Wait a Second! ⏰</h3>
-            <p>Why are you in such a rush? Wait patiently and open it right at 12:00 AM midnight to see what's inside!</p>
-            <button class="btn" onclick="closeModal()" style="padding: 10px 25px; font-size: 1rem;">Got it ❤️</button>
-        </div>
-    </div>
-
-    <!-- SCREEN 1 -->
+    <!-- SCREEN 1: Landing Page with Negative Timer -->
     <div id="screen1" class="screen active">
         <div class="teddy-container">
-            <div class="teddy">🧸</div>
-            <div class="teddy">🧸</div>
+            <div class="teddy">🧸⌚</div>
+            <div class="teddy">⌚🧸</div>
         </div>
         <div class="glass-panel">
-            <h1>Happy Birthday Kulfi! </h1>
-            <p style="font-size: 1.1rem; margin-bottom: 10px;">Waiting for midnight...</p>
+            <h1>Happy Birthday Kulfi! ✨</h1>
+            <p style="font-size: 1.1rem; margin-bottom: 10px;">Midnight has passed...</p>
             
             <div class="realistic-heart">
-                <div class="timer-text" id="liveCountdown">00:00:00</div>
+                <div class="timer-text" id="liveCountdown">-00:00:00</div>
             </div>
 
-            <button class="btn" onclick="tryOpenGift()">Open Surprise 🎁</button>
+            <button class="btn" onclick="goToScreen('screen2')">Open Surprise 🎁</button>
         </div>
     </div>
 
-    <!-- SCREEN 2 -->
+    <!-- SCREEN 2: Security Check -->
     <div id="screen2" class="screen">
         <div class="glass-panel">
             <h2 style="font-family: 'Sacramento', cursive; font-size: 3.5rem;">Security Check 🔒</h2>
@@ -374,7 +333,7 @@
         </div>
     </div>
 
-    <!-- SCREEN 3 -->
+    <!-- SCREEN 3: Map Flight -->
     <div id="screen3" class="screen">
         <h2 style="font-family: 'Sacramento', cursive; font-size: 3.5rem; margin-bottom: 20px;">Tracking Gift... ✈️</h2>
         <div class="map-wrapper">
@@ -391,7 +350,7 @@
         </div>
     </div>
 
-    <!-- SCREEN 4 -->
+    <!-- SCREEN 4: House Landing -->
     <div id="screen4" class="screen">
         <h2 style="font-family: 'Sacramento', cursive; font-size: 3.5rem; margin-bottom: 20px;">Arrived at Home! 🏡</h2>
         <div class="realistic-night-scene">
@@ -410,7 +369,7 @@
         </div>
     </div>
 
-    <!-- SCREEN 5 -->
+    <!-- SCREEN 5: Tap to Open Letter -->
     <div id="screen5" class="screen">
         <div class="glass-panel" style="cursor:pointer;" onclick="goToScreen('screen6')">
             <h2 style="font-family: 'Sacramento', cursive; font-size: 3rem; margin-bottom: 20px;">A Special Gift For You... 🧸💖</h2>
@@ -425,7 +384,7 @@
             <div class="letter-content">
                 Happiest birthday, my dear Kulfi! Your smile truly means the world to me. We might not have met in person yet, but we’ve shared so many moments online. We’ve had our ups and downs you’ve blocked and unblocked me, stayed silent, and then talked to me again but honestly, none of that matters to me. Whatever you do, I’ll always accept it with a smile because your happiness is all that counts. <br><br>
                 My only wish for you today is to stay happy forever and receive every blessing life has to offer. If I’ve ever hurt you or done anything you didn’t like in the past, I’m truly sorry. I don’t know if we’ll ever meet in real life, but if we ever get the chance, I promise to make your birthday even more special.<br><br>
-                Once again, happiest birthday, my dear Kulfi... and sorry, Vedhisha! ❤️
+                Once again, happiest birthday, my dear Kulfi... sorry, Vedhisha! ❤️
             </div>
             <div class="real-signature">
                 By Gokul Ram
@@ -434,46 +393,23 @@
     </div>
 
     <script>
-        let testMode = false;
-        function toggleTestMode() {
-            testMode = !testMode;
-            document.getElementById('testStatus').innerText = testMode ? 'ON' : 'OFF';
-            if(testMode && document.getElementById('screen1').classList.contains('active')) {
-                goToScreen('screen2');
-            }
-        }
-
-        // Accurate Live Midnight Countdown Timer
-        function updateTimer() {
+        // Negative Timer Calculation (Time elapsed since midnight 12:00 AM)
+        function updateNegativeTimer() {
             const now = new Date();
             const midnight = new Date();
-            midnight.setHours(24, 0, 0, 0); // Next 12:00 AM
+            midnight.setHours(0, 0, 0, 0); // Today's 12:00 AM midnight
 
-            let diff = midnight - now;
-            if (diff <= 0) {
-                if (!testMode) goToScreen('screen2');
-                document.getElementById('liveCountdown').innerText = "00:00:00";
-                return;
-            }
+            let diff = now - midnight; // Milliseconds passed since midnight
 
-            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let hours = Math.floor(diff / (1000 * 60 * 60));
             let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            const timeString = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+            const timeString = `-${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
             document.getElementById('liveCountdown').innerText = timeString;
         }
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        function tryOpenGift() {
-            if (testMode) {
-                goToScreen('screen2');
-            } else {
-                document.getElementById('warningModal').style.display = 'flex';
-            }
-        }
-        function closeModal() { document.getElementById('warningModal').style.display = 'none'; }
+        setInterval(updateNegativeTimer, 1000);
+        updateNegativeTimer();
 
         function goToScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
